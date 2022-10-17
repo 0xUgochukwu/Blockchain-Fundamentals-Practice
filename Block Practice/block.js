@@ -1,13 +1,8 @@
-/**
- * Import crypto-js/SHA256 library
- */
+// Importing the SHA256 Hashing Algorithm
 const SHA256 = require('crypto-js/sha256');
 
-/**
- * Class with a constructor for block 
- */
+// Building a Block
 class Block {
-
 	constructor(data){
 		this.id = 0;
         this.nonce = 544444;
@@ -15,19 +10,12 @@ class Block {
       	this.hash = "";
     }
     
-    /**
-     * Step 1. Implement `generateHash()`
-     * method that return the `self` block with the hash.
-     * 
-     * Create a Promise that resolve with `self` after you create 
-     * the hash of the object and assigned to the hash property `self.hash = ...`
-     */
-  	// 
+    // Generate Hash for the Block
   	generateHash() {
-      	// Use this to create a temporary reference of the class object
+      	
       	let self = this;
-        //Implement your code here
-
+       
+        // Generating Hash asynchronosly incase we catch any errors
         return new Promise(function(resolve, reject){
           self.hash = SHA256(JSON.stringify(self));
 
