@@ -1,18 +1,13 @@
 const SHA256 = require("crypto-js/sha256");
 
 
-const data1 = "Blockchain Rocks!";
+const data1 = "Blockchain Rocks! It's Really cool";
 const dataObject = {
 	id: 1,
   	body: "With Object Works too",
   	time: new Date().getTime().toString().slice(0,-3)
 };
 
-/**
- * Step 3: Add code to the `generate hash function
- * Function that generates the SHA256 Hash
- * @param {*} obj 
- */
 
 function generateHash(obj) {
 	// Write your code here
