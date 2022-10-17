@@ -31,6 +31,8 @@
 // }
 
 
+// Example 3
+
 function examplePromise(){
     let promiseToReturn = new Promise(function (resolve, reject) {
       let sum;
