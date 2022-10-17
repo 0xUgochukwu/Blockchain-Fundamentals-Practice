@@ -10,7 +10,6 @@ const dataObject = {
 
 
 function generateHash(obj) {
-	// Write your code here
   return (SHA256(JSON.stringify(obj)))
 }
 
