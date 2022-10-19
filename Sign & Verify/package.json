@@ -1,0 +1,19 @@
+{
+  "name": "sign-and-verify",
+  "version": "1.0.0",
+  "description": "Sign and Verify a Message using Digital Signatures",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Ugochukwu",
+    "Chukwuma"
+  ],
+  "author": "Ugochukwu Chukwuma",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "elliptic": "^6.5.4"
+  }
+}
