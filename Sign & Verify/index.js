@@ -40,6 +40,6 @@ const receiver = new Receiver(publicKey,digitalSigniture,message);
 receiver.verifySigniture();
 
 // Output
-console.log(sender);
-console.log(receiver);
-console.log(digitalSigniture);
+// console.log(sender);
+// console.log(receiver);
+// console.log(digitalSigniture);
