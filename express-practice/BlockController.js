@@ -17,6 +17,7 @@ class BlockController {
         this.initializeMockData();
         this.getBlockByIndex();
         this.postNewBlock();
+        this.validateBlockchain();
     }
 
     /**
@@ -52,6 +53,37 @@ class BlockController {
         });
     }
 
+    validateBlockchain() {
+        this.app.get("/api/validate", (req, res) => { 
+            let currentBlock;
+            let blockHash;
+            let height;
+            let errorLog = [];
+            for (let i = 0; i < this.blocks.length; i++) {
+                // Check if any block has been mutated or tempered with
+                currentBlock = this.blocks[i];
+                blockHash = currentBlock.hash;
+                height = currentBlock.height;
+                currentBlock.hash = '';
+                if (blockHash != SHA256(JSON.stringify(currentBlock)).toString()) {
+                    errorLog.push(`Hash Error at Block #${height}`);
+                }
+                // Make sure the chain is valid
+                if (i > 0 && this.blocks[i].previousBlockHash != this.blocks[i-1].hash) {
+                    errorLog.push(`Chain Error at Block #${height}`);
+                }
+            }
+
+            if (errorLog.length > 0) {
+                // res.send(`Block errors = ${errorLog.length}\nBlocks: ${errorLog}`);
+                res.send({errorLog});
+            }
+            else {
+                res.send("No errors detected");
+            }
+        });
+    }
+
     /**
      * Help method to inizialized Mock dataset, adds 10 test blocks to the blocks array
      */
@@ -60,10 +92,10 @@ class BlockController {
             for (let index = 0; index < 10; index++) {
                 let blockAux = new BlockClass.Block(`Test Data #${index}`);
                 blockAux.height = index;
-                blockAux.hash = SHA256(JSON.stringify(blockAux)).toString();
                 if (this.blocks.length > 0){
                     blockAux.previousBlockHash = this.blocks[this.blocks.length - 1].hash;
                 }
+                blockAux.hash = SHA256(JSON.stringify(blockAux)).toString();
                 this.blocks.push(blockAux);
             }
         }
