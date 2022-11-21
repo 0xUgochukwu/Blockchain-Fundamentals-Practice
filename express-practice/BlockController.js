@@ -61,7 +61,7 @@ class BlockController {
             let errorLog = [];
             for (let i = 0; i < this.blocks.length; i++) {
                 // Check if any block has been mutated or tempered with
-                currentBlock = this.blocks[i];
+                currentBlock = {...this.blocks[i]};
                 blockHash = currentBlock.hash;
                 height = currentBlock.height;
                 currentBlock.hash = '';
