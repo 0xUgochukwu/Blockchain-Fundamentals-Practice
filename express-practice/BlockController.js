@@ -1,4 +1,5 @@
 const SHA256 = require('crypto-js/sha256');
+const e = require('express');
 const BlockClass = require('./Block.js');
 
 /**
@@ -24,7 +25,7 @@ class BlockController {
     getBlockByIndex() {
         this.app.get("/api/block/:index", (req, res) => {
             // Add your code here
-            res.send(this.getBlockByIndex(req.params.index));
+            res.send(this.blocks[req.params.index]);
         });
     }
 
@@ -33,7 +34,21 @@ class BlockController {
      */
     postNewBlock() {
         this.app.post("/api/block", (req, res) => {
-            this.postNewBlock();
+            
+            if (req.body.data){
+                let newBlock = new BlockClass.Block(req.body.data);
+                newBlock.height = this.blocks.length;
+                newBlock.time = new Date().getTime().toString().slice(0,-3);
+                if (this.blocks.length > 0){
+                    newBlock.previousBlockHash = this.blocks[this.blocks.length - 1].hash;
+                }
+                newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
+                this.blocks.push(newBlock);
+                res.send(newBlock);
+            }
+            else {
+                res.send("Please enter data to add a new block");
+            }
         });
     }
 
@@ -46,6 +61,9 @@ class BlockController {
                 let blockAux = new BlockClass.Block(`Test Data #${index}`);
                 blockAux.height = index;
                 blockAux.hash = SHA256(JSON.stringify(blockAux)).toString();
+                if (this.blocks.length > 0){
+                    blockAux.previousBlockHash = this.blocks[this.blocks.length - 1].hash;
+                }
                 this.blocks.push(blockAux);
             }
         }
